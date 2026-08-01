@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "defaultMode": "default"
+  },
+  "model": "sonnet",
+  "statusLine": {
+    "type": "command",
+    "command": "claude-statusline"
+  },
+  "effortLevel": "medium",
+  "tui": "fullscreen",
+  "autoMemoryEnabled": false,
+  "theme": "dark"
+}
