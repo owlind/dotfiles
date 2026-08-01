@@ -1,0 +1,8 @@
+theme = "rose_pine"
+
+[editor]
+continue-comments = false
+
+[editor.soft-wrap]
+enable = true
+wrap-indicator = ""

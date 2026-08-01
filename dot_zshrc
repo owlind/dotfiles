@@ -1,0 +1,54 @@
+#!/usr/bin/env zsh
+
+# The following lines were added by compinstall
+
+zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
+zstyle ':completion:*' completions 1
+zstyle ':completion:*' glob 1
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'r:|[.]=** r:|=** l:|=*'
+zstyle ':completion:*' max-errors 2
+zstyle ':completion:*' substitute 1
+zstyle :compinstall filename '/home/olivia/.zshrc'
+
+autoload -Uz compinit vcs_info
+compinit
+# End of lines added by compinstall
+
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=100000
+SAVEHIST=100000
+setopt autocd extendedglob nomatch
+unsetopt beep notify
+bindkey -e
+# End of lines configured by zsh-newuser-install
+
+precmd() {
+    vcs_info
+}
+zstyle ':vcs_info:git*' formats '(%b) '
+setopt prompt_subst
+export PROMPT='%F{blue}%n%f@%F{green}%M%f %F{yellow}%~%f ${vcs_info_msg_0_}%# '
+
+export PATH="${HOME}/.local/bin:${HOME}/bin:${PATH}"
+if [ -d ~/.bun ] ; then
+    export PATH="${HOME}/.bun/bin:$PATH"
+fi
+export PAGER='less'
+export EDITOR='helix'
+
+source ~/.aliases
+
+
+# Launch ssh-agent
+export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
+if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+    ssh-agent -t 1h > "$XDG_RUNTIME_DIR/ssh-agent.env"
+fi
+if [[ ! -f "$SSH_AUTH_SOCK" ]]; then
+    source "$XDG_RUNTIME_DIR/ssh-agent.env" > /dev/null
+fi
+
+function mkcd() {
+    mkdir $1 && cd $1
+}

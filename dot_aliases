@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+alias ls='ls --color=auto'
+alias ger='grep --color=auto'
+alias bat='bat -n'
+
+alias hx='helix'
+alias userctl='systemctl --user'
+alias gs='git status'
+alias gc='git commit'
+alias ga='git add'
+alias chez='chezmoi'

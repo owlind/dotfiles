@@ -1,0 +1,33 @@
+[language-server.ty]
+command = "ty"
+args = ["server"]
+
+[[language]]
+name = "python"
+language-servers = ["ty"]
+formatter = { command = "black", args = ["--quiet", "-"] }
+auto-format = true
+scope = "source.python"
+
+[language-server.typescript-language-server]
+
+[[language]]
+name = "typescript"
+formatter = { command = "bunx", args = ["prettier", "--parser", "typescript"] }
+language-servers = [{ name = "typescript-language-server", except-features = ["format"] }]
+auto-format = true
+
+[[language]]
+name = "tsx"
+formatter = { command = "bunx", args = ["prettier", "--parser", "babel-ts"] }
+language-servers = [{ name = "typescript-language-server", except-features = ["format"] }]
+auto-format = true
+
+[language-server.kotlin-lsp]
+command = "kotlin-lsp"
+args = ["--stdio"]
+timeout = 60
+
+[[language]]
+name = "kotlin"
+language-servers = [ "kotlin-lsp" ]
