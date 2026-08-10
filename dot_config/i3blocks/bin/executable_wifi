@@ -4,19 +4,39 @@ source colors.sh
 
 # TODO: Make $iface configurable
 
-iface="wlan0"
+# Check if we're connected
+ip route get 1.1.1.1 > /dev/null
+if ! [ $? -eq 0 ] ; then
+    echo "disconnected"
+    echo "disconnected"
+    echo $subtle
+    exit
+fi
+
+# Connected, check the default interfaec
+iface=$(ip route show default | cut -d' ' -f5)
+
+if ! [ -d /sys/class/net/$iface ] ; then
+    # This shouldn't happen
+    exit 1
+fi
 
 if [ $(cat /sys/class/net/$iface/operstate) = 'down' ] ; then
     echo "down"
     echo "down"
     echo $rose
-    exit
+    exit 0
 fi
 
-ssid=$(iw dev $iface link | grep SSID | cut -d' ' -f2)
-qual=$(iw dev wlan0 link | grep 'dBm$' | cut -d' ' -f2 | awk '{print ($1 > -50 ? 100 :($1 < -100 ? 0 : ($1+100)*2))}')
+if [ -d /sys/class/net/$iface/wireless ] ; then
+    ssid=$(iw dev $iface link | grep SSID | cut -d' ' -f2)
+    qual=$(iw dev wlan0 link | grep 'dBm$' | cut -d' ' -f2 | awk '{print ($1 > -50 ? 100 :($1 < -100 ? 0 : ($1+100)*2))}')
+    wireless=" ($ssid $qual%)"
+else
+    wireless=""
+fi
 
-echo "$qual% ($ssid)"
-echo "$qual% ($ssid)"
+echo "up@$iface$wireless"
+echo "up@$iface$wireless"
 echo $subtle
-exit
+exit 0

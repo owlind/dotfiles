@@ -1,3 +1,7 @@
+[weather]
+command=weather
+interval=60
+
 [wifi]
 command=wifi
 interval=5

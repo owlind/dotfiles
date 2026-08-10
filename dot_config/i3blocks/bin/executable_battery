@@ -2,6 +2,13 @@
 
 source colors.sh
 
+if ! [ -d /sys/class/power_supply/BAT1 ] ; then
+  echo ""
+  echo ""
+  echo $subtle
+  exit 0
+fi
+
 capacity=$(cat /sys/class/power_supply/BAT1/capacity)
 status=$(cat /sys/class/power_supply/BAT1/status)
 

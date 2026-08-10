@@ -263,18 +263,19 @@ bindsym $mod+r mode "resize"
 # Read `man 5 sway-bar` for more information about this section.
 bar {
     position top
-    font Recurse Sans Linear Static 9
+    font Recurse Sans Linear Static 10
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
     # status_command while date +'%Y-%m-%d %X'; do sleep 1; done
+    # status_command 2>/tmp/i3blocks.err i3blocks -vvv | tee /tmp/i3blocks.out
     status_command i3blocks
     separator_symbol :|:
 
     colors {
         background $base
         focused_workspace $iris $highlightmed $subtle
-        active_workspace $rose $highlightlow $subtle
+        active_workspace $iris $highlightlow $subtle
         inactive_workspace $overlay $base $subtle
     }
 }
