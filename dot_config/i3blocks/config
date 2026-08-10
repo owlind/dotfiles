@@ -1,0 +1,12 @@
+[wifi]
+command=wifi
+interval=5
+
+[battery]
+command=battery
+interval=30
+
+[time]
+command=date +'%F %H:%M %a'
+color=#908caa
+interval=5

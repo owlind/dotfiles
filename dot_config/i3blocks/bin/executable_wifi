@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+source colors.sh
+
+# TODO: Make $iface configurable
+
+iface="wlan0"
+
+if [ $(cat /sys/class/net/$iface/operstate) = 'down' ] ; then
+    echo "down"
+    echo "down"
+    echo $rose
+    exit
+fi
+
+ssid=$(iw dev $iface link | grep SSID | cut -d' ' -f2)
+qual=$(iw dev wlan0 link | grep 'dBm$' | cut -d' ' -f2 | awk '{print ($1 > -50 ? 100 :($1 < -100 ? 0 : ($1+100)*2))}')
+
+echo "$qual% ($ssid)"
+echo "$qual% ($ssid)"
+echo $subtle
+exit

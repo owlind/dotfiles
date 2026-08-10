@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+source colors.sh
+
+capacity=$(cat /sys/class/power_supply/BAT1/capacity)
+status=$(cat /sys/class/power_supply/BAT1/status)
+
+# C=$capacity
+# 
+# [ $C -le 100 ] && icon='''
+# [ $C -le 75 ] && icon='''
+# [ $C -le 50 ] && icon='''
+# [ $C -le 25 ] && icon='''
+# [ $C -le 10 ] && icon='`'
+
+text="$capacity% $status"
+
+echo "$text "
+echo "$text"
+
+if [ $capacity -le 5 ] ; then
+	echo $love
+elif [ $capacity -le 25 ] ; then
+  echo $rose
+else
+  echo $subtle
+fi
+
+
+exit 0
