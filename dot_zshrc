@@ -31,6 +31,7 @@ setopt prompt_subst
 export PROMPT='%F{blue}%n%f@%F{green}%M%f %F{yellow}%~%f ${vcs_info_msg_0_}%# '
 
 export PATH="${HOME}/.local/bin:${HOME}/bin:${PATH}"
+export PATH="${HOME}/.config/i3blocks/bin/:${PATH}"
 if [ -d ~/.bun ] ; then
     export PATH="${HOME}/.bun/bin:$PATH"
 fi
