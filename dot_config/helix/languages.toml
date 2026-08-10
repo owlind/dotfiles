@@ -31,3 +31,7 @@ timeout = 60
 [[language]]
 name = "kotlin"
 language-servers = [ "kotlin-lsp" ]
+
+[[language]]
+name = "rust"
+language-servers = [ "rust-analyzer" ]
