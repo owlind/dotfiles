@@ -72,9 +72,44 @@ weather=$(curl -s "https://api.open-meteo.com/v1/forecast?latitude=$lat&longitud
 # │ 99   │ Thunderstorm with heavy hail      │
 # └──────┴───────────────────────────────────┘
 
-temp=$(echo $weather | jq -r .current.temperature_2m | awk '{ printf "%.0f", $1 * 9/5 + 32 }')
-weather_code=$(echo $weather | jq -r .current.weather_code)
+temp=$(jq -r .current.temperature_2m <<< "$weather" | awk '{ printf "%.0f", $1 * 9/5 + 32 }')
+weather_code=$(jq -r .current.weather_code <<< "$weather")
 
-echo "$temp °F"
-echo "$temp °F"
+# If "Unknown" appears a lot, fill in the blanks with the info from the link below:
+# https://www.nodc.noaa.gov/archive/arc0021/0002199/1.1/data/0-data/HTML/WMO-CODE/WMO4677.HTM
+
+case $weather_code in
+     0) status="Clear Sky" ;;
+     1) status="Mainly Clear" ;;
+     2) status="Partly Cloudy" ;;
+     3) status="Overcast" ;;
+     45) status="Fog" ;;
+     51) status="Drizzle: Light" ;;
+     53) status="Drizzle: Moderate" ;;
+     55) status="Drizzle: Dense" ;;
+     56) status="Freezing Drizzle: Light" ;;
+     57) status="Freezing Drizzle: Dense" ;;
+     61) status="Rain: Slight)" ;;
+     63) status="Rain Moderate: Moderate" ;;
+     65) status="Rain: Heavy" ;;
+     66) status="Freezing Rain: Light" ;;
+     67) status="Freezing Rain: Heavy" ;;
+     71) status="Snow Fall: Slight" ;;
+     73) status="Snow Fall: Moderate" ;;
+     75) status="Snow Fall: Heavy" ;;
+     77) status="Snow Grains" ;;
+     80) status="Rain Showers: Slight" ;;
+     81) status="Rain Showers: Moderate" ;;
+     82) status="Rain Showers: Heavy" ;;
+     85) status="Snow Showers: Slight" ;;
+     86) status="Snow Showers: Heavy" ;;
+     95) status="Thunderstorm: Slight or Moderate" ;;
+     96) status="Thunderstorm with Slight Hail" ;;
+     99) status="Thunderstorm with Heavy Hail" ;;
+     
+     *) status="Unknown ($weather_code)"
+esac
+
+echo "$status - $temp °F"
+echo "$status - $temp °F"
 echo $subtle
