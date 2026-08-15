@@ -89,8 +89,8 @@ case $weather_code in
      55) status="Drizzle: Dense" ;;
      56) status="Freezing Drizzle: Light" ;;
      57) status="Freezing Drizzle: Dense" ;;
-     61) status="Rain: Slight)" ;;
-     63) status="Rain Moderate: Moderate" ;;
+     61) status="Rain: Slight" ;;
+     63) status="Rain: Moderate" ;;
      65) status="Rain: Heavy" ;;
      66) status="Freezing Rain: Light" ;;
      67) status="Freezing Rain: Heavy" ;;

@@ -30,7 +30,7 @@ hide_edge_borders both
 for_window [app_id=$term_id] border pixel 1
 for_window [app_id="org.qutebrowser.qutebrowser"] border pixel 1
 
-font Recurse Sans Linear Static 10
+font Recurse Sans Linear Static 8
 
 # Rose Pine Color Scheme
 set $base #191724
@@ -50,9 +50,9 @@ set $highlightmed #403d52
 set $highlighthigh #524f67
 
 # Theming border and windows
-client.focused $pine $highlightmed $text $pine $pine
-client.focused_inactive $text $highlightlow $text $subtle $surface
-client.unfocused $text $base $text $overlay $overlay
+client.focused $iris $highlightmed $subtle $pine $pine
+client.focused_inactive $muted $highlightlow $subtle $subtle $surface
+client.unfocused $muted $base $subtle $overlay $overlay
 client.urgent $text $base $text $love $love
 client.placeholder $base $base $text $overlay $overlay
 client.background $base
@@ -263,8 +263,8 @@ bindsym $mod+r mode "resize"
 # Read `man 5 sway-bar` for more information about this section.
 bar {
     position top
-    font Recurse Sans Linear Static 10
-
+    font Recurse Sans Linear Static 9
+    
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
     # status_command while date +'%Y-%m-%d %X'; do sleep 1; done

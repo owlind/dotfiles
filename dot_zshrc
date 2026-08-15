@@ -28,7 +28,7 @@ precmd() {
 }
 zstyle ':vcs_info:git*' formats '(%b) '
 setopt prompt_subst
-export PROMPT='%F{blue}%n%f@%F{green}%M%f %F{yellow}%~%f ${vcs_info_msg_0_}%# '
+export PROMPT='%F{blue}%n%f@%F{green}%M%f %F{yellow}%3~%f ${vcs_info_msg_0_}%# '
 
 export PATH="${HOME}/.local/bin:${HOME}/bin:${PATH}"
 export PATH="${HOME}/.config/i3blocks/bin:${PATH}"
