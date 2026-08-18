@@ -36,7 +36,7 @@ else
     wireless=""
 fi
 
-echo "up [$iface$wireless]"
-echo "up [$iface$wireless]"
+echo "net: up [$iface$wireless]"
+echo "net: up [$iface$wireless]"
 echo "$subtle"
 exit 0

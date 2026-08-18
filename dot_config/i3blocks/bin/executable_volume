@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -uo pipefail
+
+source "$(dirname "${BASH_SOURCE[0]}")/colors.sh"
+
+sinkText=$(wpctl get-volume @DEFAULT_AUDIO_SINK@)
+volume=$(awk '{print $2*100}' <<< "${sinkText}")
+if [[ $(grep 'MUTED' <<< "$sinkText") ]] ; then
+  mute=" [M]"
+else
+  mute=""
+fi
+
+echo "vol: ${volume}%${mute}"
+echo "vol: ${volume}%${mute}"
+echo "$subtle"

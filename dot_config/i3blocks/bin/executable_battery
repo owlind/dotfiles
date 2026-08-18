@@ -22,8 +22,8 @@ status=$(cat /sys/class/power_supply/BAT1/status)
 
 text="$capacity% $status"
 
-echo "$text "
-echo "$text"
+echo "bat: $text "
+echo "bat: $text"
 
 if [ $capacity -le 5 ] ; then
 	echo $love
