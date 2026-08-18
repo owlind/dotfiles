@@ -1,32 +1,36 @@
 #!/usr/bin/env bash
 
-source colors.sh
+set -uo pipefail
 
-ip route get 1.1.1.1 > /dev/null
-if ! [ $? -eq 0 ] ; then
+source "$(dirname "${BASH_SOURCE[0]}")/colors.sh"
+
+ip route get 1.1.1.1 > /dev/null 2>/dev/null
+if ! [[ $? -eq 0 ]] ; then
     echo "down"
     echo "down"
-    echo $subtle
-    exit
+    echo "$subtle"
+    exit 0
 fi
 
 iface=$(ip -j route get 1.1.1.1 | jq -r '.[0].dev')
 
-if ! [ -d /sys/class/net/$iface ] ; then
+if ! [[ -d "/sys/class/net/$iface" ]] ; then
     # This shouldn't happen
     exit 1
 fi
 
-if [ $(cat /sys/class/net/$iface/operstate) = 'down' ] ; then
+if [[ $(cat "/sys/class/net/$iface/operstate") = 'down' ]] ; then
     echo "down"
     echo "down"
-    echo $rose
+    echo "$rose"
     exit 0
 fi
 
-if [ -d /sys/class/net/$iface/wireless ] ; then
-    ssid=$(iwctl station $iface show | grep 'Connected network' | awk '{ print $3 }')
-    qual=$(iwctl station $iface show | grep 'RSSI' | head -n 1 | awk '{print ($2 > -50 ? 100 :($2 < -100 ? 0 : ($2+100)*2))}')
+if [[ -d "/sys/class/net/$iface/wireless" ]] ; then
+    info=$(iwctl station wlan0 show | sed -E 's/[[:space:]]+$//; s/ {2,}/\t/g')
+    ssid=$(awk -F'\t' '/Connected network/{print $NF}' <<< "$info")
+    rssi=$(awk -F'\t' '/RSSI/{print $NF}' <<< "$info" | awk '{print $1}' | head -n 1)
+    qual=$(awk -v r="$rssi" 'BEGIN{ print (r > -50 ? 100 : (r < -100 ? 0 : (r+100)*2)) }')
     wireless=" ($ssid $qual%)"
 else
     wireless=""
@@ -34,5 +38,5 @@ fi
 
 echo "up [$iface$wireless]"
 echo "up [$iface$wireless]"
-echo $subtle
+echo "$subtle"
 exit 0
